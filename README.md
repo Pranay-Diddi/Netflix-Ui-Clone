@@ -12,12 +12,17 @@ Trending Movies Carousel: Scrollable list of trending movies with hover effects 
 ## Usage
 
 Navigation Bar: Use the search icon to display the search box.
+
 Video Player: Click on a movie poster in the trending section to open a video popup.
+
 Hover Effects: Hover over movie posters to see the zoom effect.
 
 index.html: The main HTML file containing the structure of the webpage.
+
 style.css: Contains all the CSS styles used in the project.
+
 script.js: JavaScript file for handling interactions and dynamic elements.
+
 images: Directory containing all images used in the project.
 
 ## Technologies Used
