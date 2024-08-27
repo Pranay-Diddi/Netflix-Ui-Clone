@@ -1,0 +1,195 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Click Example</title>
+    <style>
+        .movies {
+            display: flex;
+            flex-direction: column;
+        }
+        .trending, .top-rated, .top-rated-action-thriller {
+            margin-bottom: 20px;
+        }
+        .moviescontent {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .images {
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="movies">
+        <div class="trending">
+            <div class="moviescontent">
+                <div class="images" data-id="1">Trending Image 1</div>
+                <div class="images" data-id="2">Trending Image 2</div>
+            </div>
+        </div>
+        <div class="top-rated">
+            <div class="moviescontent">
+                <div class="images" data-id="3">Top Rated Image 1</div>
+                <div class="images" data-id="4">Top Rated Image 2</div>
+            </div>
+        </div>
+        <div class="top-rated-action-thriller">
+            <div class="moviescontent">
+                <div class="images" data-id="5">Action Thriller Image 1</div>
+                <div class="images" data-id="6">Action Thriller Image 2</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Custom function defined as a const
+        const myCustomFunction = (itemId, parentClass) => {
+            // Your custom logic here. For example:
+            console.log('Custom function called with item ID:', itemId);
+            console.log('Parent class:', parentClass);
+            // Implement your custom logic
+        };
+
+        // JavaScript to handle click events
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const moviesContainer = document.querySelector('.movies');
+
+            moviesContainer.addEventListener('click', (event) => {
+                if (event.target.classList.contains('images')) {
+                    const itemId = event.target.getAttribute('data-id');
+                    const parentClass = getParentClass(event.target);
+                    console.log('Item clicked:', itemId);
+                    console.log('Parent class:', parentClass);
+                    handleItemClick(itemId, parentClass);
+                }
+            });
+
+            function handleItemClick(itemId, parentClass) {
+                // Call your custom function here
+                myCustomFunction(itemId, parentClass);
+            }
+
+            function getParentClass(element) {
+                while (element && !element.classList.contains('movies')) {
+                    if (element.classList.contains('trending') || element.classList.contains('top-rated') || element.classList.contains('top-rated-action-thriller')) {
+                        return element.className;
+                    }
+                    element = element.parentElement;
+                }
+                return null;
+            }
+        });
+    </script>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Click Example</title>
+    <style>
+        .movies {
+            display: flex;
+            flex-direction: column;
+        }
+        .trending, .top-rated, .top-rated-action-thriller {
+            margin-bottom: 20px;
+        }
+        .moviescontent {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .images {
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin: 5px;
+        }
+        .video-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .video-overlay iframe {
+            width: 80%;
+            height: 80%;
+        }
+    </style>
+</head>
+<body>
+    <div class="movies">
+        <div class="trending">
+            <div class="moviescontent">
+                <div class="images" data-video-src="https://www.youtube.com/embed/trailer1">Trending Image 1</div>
+                <div class="images" data-video-src="https://www.youtube.com/embed/trailer2">Trending Image 2</div>
+            </div>
+        </div>
+        <div class="top-rated">
+            <div class="moviescontent">
+                <div class="images" data-video-src="https://www.youtube.com/embed/trailer3">Top Rated Image 1</div>
+                <div class="images" data-video-src="https://www.youtube.com/embed/trailer4">Top Rated Image 2</div>
+            </div>
+        </div>
+        <div class="top-rated-action-thriller">
+            <div class="moviescontent">
+                <div class="images" data-video-src="https://www.youtube.com/embed/trailer5">Action Thriller Image 1</div>
+                <div class="images" data-video-src="https://www.youtube.com/embed/trailer6">Action Thriller Image 2</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="video-overlay" id="videoOverlay">
+        <iframe id="videoPlayer" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <script>
+        // Custom function to show video overlay
+        const showVideoOverlay = (videoSrc) => {
+            const videoOverlay = document.getElementById('videoOverlay');
+            const videoPlayer = document.getElementById('videoPlayer');
+            
+            videoPlayer.src = videoSrc;
+            videoOverlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        };
+
+        // JavaScript to handle click events
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const moviesContainer = document.querySelector('.movies');
+
+            moviesContainer.addEventListener('click', (event) => {
+                if (event.target.classList.contains('images')) {
+                    const videoSrc = event.target.getAttribute('data-video-src');
+                    showVideoOverlay(videoSrc);
+                }
+            });
+
+            // Close video overlay on click outside the video player
+            const videoOverlay = document.getElementById('videoOverlay');
+            videoOverlay.addEventListener('click', (event) => {
+                if (event.target === videoOverlay) {
+                    videoOverlay.style.display = 'none';
+                    document.body.style.overflow = 'auto'; // Re-enable scrolling
+                    document.getElementById('videoPlayer').src = ''; // Stop the video
+                }
+            });
+        });
+    </script>
+</body>
+</html>
