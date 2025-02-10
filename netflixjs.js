@@ -176,9 +176,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (event.target.classList.contains('child')) {
             const itemId = event.target.getAttribute('data-id');
             const parentClass = getParentClass(event.target);
-            // console.log('Item clicked:', itemId);
-            // console.log('Parent class:', parentClass);
-            // handleItemClick(itemId, parentClass);
             handle();
         }
     });
